@@ -1,0 +1,133 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"LiquiditySource": {
+				"enum": [
+					"Native",
+					"Uniswap",
+					"Uniswap_V2",
+					"Curve",
+					"LiquidityProvider",
+					"MultiBridge",
+					"Balancer",
+					"Balancer_V2",
+					"CREAM",
+					"Bancor",
+					"MakerPsm",
+					"mStable",
+					"Mooniswap",
+					"MultiHop",
+					"Shell",
+					"SushiSwap",
+					"DODO",
+					"DODO_V2",
+					"CryptoCom",
+					"KyberDMM",
+					"Component",
+					"Saddle",
+					"xSigma",
+					"Uniswap_V3",
+					"Curve_V2",
+					"Lido",
+					"ShibaSwap",
+					"Aave_V2",
+					"Compound",
+					"Synapse",
+					"BancorV3",
+					"PancakeSwap",
+					"PancakeSwap_V2",
+					"BiSwap",
+					"MDex",
+					"KnightSwap",
+					"BakerySwap",
+					"Nerve",
+					"Belt",
+					"Ellipsis",
+					"ApeSwap",
+					"CheeseSwap",
+					"ACryptoS",
+					"QuickSwap",
+					"Dfyn",
+					"WaultSwap",
+					"FirebirdOneSwap",
+					"IronSwap",
+					"MeshSwap",
+					"Pangolin",
+					"TraderJoe",
+					"Platypus",
+					"GMX",
+					"UbeSwap",
+					"MobiusMoney",
+					"SpiritSwap",
+					"SpookySwap",
+					"Beethovenx",
+					"MorpheusSwap",
+					"Yoshi",
+					"Geist",
+					"Velodrome"
+				],
+				"type": "string"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "Hyper DEX swap API.",
+		"version": "1.0.0",
+		"description": "The Hyper DEX API. In aggregate, the APIs provide interfaces to Hyper DEX liquidity. Everything can be run monolithically via yarn start and docker-compose up as described in Getting Started."
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/sources": {
+			"get": {
+				"operationId": "GetSources",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/LiquiditySource"
+									},
+									"type": "array"
+								},
+								"examples": {
+									"Example 1": {
+										"value": [
+											"Uniswap",
+											"Uniswap_V2",
+											"Uniswap_V3"
+										]
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Returns supported liquidity sources for current network",
+				"summary": "Liquidity Sources",
+				"tags": [
+					"Source"
+				],
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	],
+	"tags": [
+		{
+			"name": "Source"
+		}
+	]
+}

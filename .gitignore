@@ -1,0 +1,11 @@
+# IDE files
+.vscode/
+.idea/
+
+node_modules/
+
+build/
+logs/
+public/plasma-gas-station-api-doc.json
+
+.env

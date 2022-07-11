@@ -2,6 +2,12 @@
   "name": "hyper-dex-swap-node",
   "version": "1.0.0",
   "description": "Hyper DEX swap API node",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsib/gas-station-relay"
+  },
+  "author": "Sergey <itsib.su@gmail.com>",
   "main": "index.js",
   "scripts": {
     "build": "npm run clean && npm run doc && tsc",
@@ -14,8 +20,6 @@
     "clean": "rm -rf ./build",
     "postinstall": "node patch.js"
   },
-  "author": "Sergey <itsib.su@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "@0x/asset-swapper": "^16.63.0",
     "@tsed/exceptions": "^6.116.3",

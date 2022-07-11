@@ -1,5 +1,5 @@
 FROM node:16 AS dist
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json patch.js ./
 RUN npm install
 COPY . ./
 RUN npm run build

@@ -1,9 +1,9 @@
 import { inject } from 'inversify';
 import { BaseHttpController, controller, httpPost, requestBody } from 'inversify-express-utils';
 import { Body, Example, Post, Route, Tags } from 'tsoa';
-import { POST_QUOTE_REQUEST_SCHEMA } from '../schemas/post-quote-request.schema';
+import { QUOTE_REQUEST_SCHEMA } from '../schemas/quote-request.schema';
 import { SwapService } from '../services';
-import { QuoteParams } from '../types';
+import { SwapQuoteQuery, SwapQuoteResponse } from '../types';
 import { validatorMiddlewareFactory } from '../utils';
 
 @Route('/swap')
@@ -14,15 +14,16 @@ export class SwapController extends BaseHttpController {
   }
 
   /**
-   * Nearly identical to /swap/quote, but with a few key differences:
-   * Rather than returning a transaction that can be submitted to an Ethereum node,
-   * this resource simply indicates the pricing that would be
-   * available for an analogous call to /swap/quote.
+   * Get an easy-to-consume quote for buying or selling any ERC20 token.
+   * The return format is a valid unsigned Ethereum transaction and can be submitted
+   * directly to an Ethereum node (or the nodes of other chains if applicable)
+   * to complete the swap. For transactions where the sellToken is not ETH, you will
+   * have to set your allowances.
    *
    * @summary Get Swap quote
    */
   @Post('/quote')
-  @Example<QuoteParams>({
+  @Example<SwapQuoteQuery>({
     sellToken: '0xaD6D458402F60fD3Bd25163575031ACDce07538D',
     buyToken: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
     sellAmount: '9995002498750625',
@@ -31,8 +32,8 @@ export class SwapController extends BaseHttpController {
     excludedSources: 'Uniswap,Uniswap_V3',
   })
   @Tags('Swap')
-  @httpPost('/quote', validatorMiddlewareFactory(POST_QUOTE_REQUEST_SCHEMA))
-  async postPrice(@requestBody() @Body() body: QuoteParams) {
+  @httpPost('/quote', validatorMiddlewareFactory(QUOTE_REQUEST_SCHEMA, 'body'))
+  async postQuote(@requestBody() @Body() body: SwapQuoteQuery): Promise<SwapQuoteResponse> {
     return this._swapService.getQuote(body);
   }
 }

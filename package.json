@@ -1,7 +1,7 @@
 {
   "name": "hyper-dex-swap-node",
   "version": "1.0.0",
-  "description": "Hyper DEX swap API",
+  "description": "Hyper DEX swap API node",
   "main": "index.js",
   "scripts": {
     "build": "npm run clean && npm run doc && tsc",

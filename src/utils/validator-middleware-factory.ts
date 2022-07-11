@@ -15,11 +15,11 @@ ajv.addFormat('amount', /^\d+$/);
 ajv.addFormat('slippage', /^0.\d+$/);
 ajv.addFormat('hex', /^0x[\dA-Fa-f]*$/);
 
-export function validatorMiddlewareFactory(schema: any): RequestHandler {
+export function validatorMiddlewareFactory(schema: any, placement: 'body' | 'query'): RequestHandler {
   const validate = ajv.compile(schema);
 
   return (req: Request, res: Response, next: NextFunction): void => {
-    const valid = validate(req.body);
+    const valid = validate(req[placement]);
     if (!valid) {
       const output = betterAjvErrors(schema, req.body, validate.errors, { format: 'js' });
       next(new BadRequest('Validation error', output.map(e => {

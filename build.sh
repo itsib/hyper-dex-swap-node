@@ -6,7 +6,7 @@ then
   exit 1
 fi
 
-IMAGE=sergeyitsib/hyper-dex-swap
+IMAGE=sergeyitsib/hyper-dex-swap-node
 VERSION=$(git tag --sort=version:refname | tail -1)
 
 docker build -t $IMAGE .

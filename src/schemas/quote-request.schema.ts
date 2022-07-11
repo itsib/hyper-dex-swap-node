@@ -1,4 +1,4 @@
-export const POST_QUOTE_REQUEST_SCHEMA = {
+export const QUOTE_REQUEST_SCHEMA = {
   title: 'Quote request parameters',
   type: 'object',
   required: ['sellToken', 'buyToken', 'takerAddress'],

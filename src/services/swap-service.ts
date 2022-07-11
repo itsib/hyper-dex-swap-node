@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 import { inject, injectable } from 'inversify';
 import wethAbi from '../abi/weth.json';
 import { DEFAULT_QUOTE_OPTS, NULL_ADDRESS } from '../constants';
-import { GetSwapQuoteRequest, GetSwapQuoteResponse, Provider, QuoteParams } from '../types';
+import { GetSwapQuoteRequest, SwapQuoteResponse, Provider, SwapQuoteQuery } from '../types';
 import {
   FakeOrderbook,
   getSwapQuotePrice,
@@ -17,7 +17,7 @@ import {
 import { OptionsService } from './options-service';
 
 export interface ISwapService {
-  getQuote(req: QuoteParams): Promise<any>;
+  getQuote(req: SwapQuoteQuery): Promise<any>;
 }
 
 @injectable()
@@ -40,7 +40,7 @@ export class SwapService implements ISwapService {
     this._wethContract = this._optionsService.getWrappedAddress().then(address => new Contract(address, wethAbi, this._provider));
   }
 
-  async getQuote(params: QuoteParams): Promise<any> {
+  async getQuote(params: SwapQuoteQuery): Promise<SwapQuoteResponse> {
     const quoteRequest: GetSwapQuoteRequest = await this._parseQuoteParams(params);
 
     if (quoteRequest.isWrap) {
@@ -57,7 +57,7 @@ export class SwapService implements ISwapService {
    * @param quoteRequest
    * @private
    */
-  private async _getWrapQuote(quoteRequest: GetSwapQuoteRequest): Promise<GetSwapQuoteResponse> {
+  private async _getWrapQuote(quoteRequest: GetSwapQuoteRequest): Promise<SwapQuoteResponse> {
     const { chainId } = await this._provider.getNetwork();
     const nativeAddress = await this._optionsService.getNativeAddress();
     const wethContract = await this._wethContract;
@@ -70,13 +70,15 @@ export class SwapService implements ISwapService {
       sellAmount: quoteRequest.amount.toString(),
       buyTokenAddress: wethContract.address,
       sellTokenAddress: nativeAddress,
+      allowanceTarget: NULL_ADDRESS,
 
       price: '1',
       guaranteedPrice: '1',
       sources: [],
       sellTokenToEthRate: '1',
       buyTokenToEthRate: '1',
-      allowanceTarget: NULL_ADDRESS,
+      protocolFee: '0',
+      minimumProtocolFee: '0',
 
       from: quoteRequest.takerAddress,
       to: wethContract.address,
@@ -90,7 +92,7 @@ export class SwapService implements ISwapService {
    * @param quoteRequest
    * @private
    */
-  private async _getUnwrapQuote(quoteRequest: GetSwapQuoteRequest): Promise<any> {
+  private async _getUnwrapQuote(quoteRequest: GetSwapQuoteRequest): Promise<SwapQuoteResponse> {
     const { chainId } = await this._provider.getNetwork();
     const nativeAddress = await this._optionsService.getNativeAddress();
     const wethContract = await this._wethContract;
@@ -102,13 +104,15 @@ export class SwapService implements ISwapService {
       sellAmount: quoteRequest.amount.toString(),
       buyTokenAddress: nativeAddress,
       sellTokenAddress: wethContract.address,
+      allowanceTarget: wethContract.address,
 
       price: '1',
       guaranteedPrice: '1',
       sources: [],
       sellTokenToEthRate: '1',
       buyTokenToEthRate: '1',
-      allowanceTarget: wethContract.address,
+      protocolFee: '0',
+      minimumProtocolFee: '0',
 
       from: quoteRequest.takerAddress,
       to: wethContract.address,
@@ -122,7 +126,7 @@ export class SwapService implements ISwapService {
    * @param quoteRequest
    * @private
    */
-  private async _getSwapQuote(quoteRequest: GetSwapQuoteRequest): Promise<GetSwapQuoteResponse> {
+  private async _getSwapQuote(quoteRequest: GetSwapQuoteRequest): Promise<SwapQuoteResponse> {
     const { chainId } = await this._provider.getNetwork();
     const swapQuoter = await this._swapQuoter;
     const swapQuoteConsumer = await this._swapQuoteConsumer;
@@ -156,6 +160,8 @@ export class SwapService implements ISwapService {
     const sellTokenToEthRate = swapQuote.takerAmountPerEth.times(new BigNumber(10).pow(18 - swapQuote.takerTokenDecimals)).decimalPlaces(swapQuote.takerTokenDecimals);
     const buyTokenToEthRate = swapQuote.makerAmountPerEth.times(new BigNumber(10).pow(18 - swapQuote.makerTokenDecimals)).decimalPlaces(swapQuote.makerTokenDecimals);
 
+    const minimumProtocolFee = BigNumber.min(swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount, swapQuote.bestCaseQuoteInfo.protocolFeeInWeiAmount);
+
     const value = quoteRequest.isNativeSell ? swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount.plus(swapQuote.worstCaseQuoteInfo.takerAmount) : swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount;
 
     return {
@@ -164,13 +170,15 @@ export class SwapService implements ISwapService {
       sellAmount: swapQuote.bestCaseQuoteInfo.totalTakerAmount.toString(),
       buyTokenAddress: quoteRequest.isNativeBuy ? nativeAddress : quoteRequest.buyToken,
       sellTokenAddress: quoteRequest.isNativeSell ? nativeAddress : quoteRequest.sellToken,
+      allowanceTarget: quoteRequest.isNativeSell ? NULL_ADDRESS : contractAddresses.exchangeProxy,
 
       price: price.toString(),
       guaranteedPrice: guaranteedPrice.toString(),
       sources: getSwapQuoteSources(swapQuote, chainId),
       sellTokenToEthRate: sellTokenToEthRate.toString(),
       buyTokenToEthRate: buyTokenToEthRate.toString(),
-      allowanceTarget: quoteRequest.isNativeSell ? NULL_ADDRESS : contractAddresses.exchangeProxy,
+      protocolFee: swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount.toString(),
+      minimumProtocolFee: minimumProtocolFee.toString(),
 
       from: quoteRequest.takerAddress,
       to: callDataInfo.toAddress,
@@ -184,7 +192,7 @@ export class SwapService implements ISwapService {
    * @param params
    * @private
    */
-  private async _parseQuoteParams(params: QuoteParams): Promise<GetSwapQuoteRequest> {
+  private async _parseQuoteParams(params: SwapQuoteQuery): Promise<GetSwapQuoteRequest> {
     const wrappedAddress = await this._optionsService.getWrappedAddress();
     const defaultExcludedSources = await this._optionsService.getDefaultExcludedSources();
 

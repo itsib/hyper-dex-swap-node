@@ -74,28 +74,173 @@
 				],
 				"type": "string"
 			},
-			"QuoteParams": {
+			"ChainId": {
+				"enum": [
+					1,
+					3,
+					4,
+					42,
+					56,
+					137,
+					80001,
+					43114,
+					250,
+					42220,
+					10
+				],
+				"type": "number"
+			},
+			"SwapQuoteLiquiditySource": {
 				"properties": {
-					"sellToken": {
+					"name": {
+						"type": "string",
+						"description": "Liquidity source name"
+					},
+					"proportion": {
+						"type": "string",
+						"description": "Shows how much interest the source of liquidity is used"
+					},
+					"intermediateToken": {
 						"type": "string"
 					},
-					"buyToken": {
-						"type": "string"
-					},
-					"sellAmount": {
-						"type": "string"
+					"hops": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"name",
+					"proportion"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SwapQuoteResponse": {
+				"properties": {
+					"chainId": {
+						"$ref": "#/components/schemas/ChainId",
+						"description": "Current chain ID"
 					},
 					"buyAmount": {
-						"type": "string"
+						"type": "string",
+						"description": "The amount of buyToken (in buyToken units) that would be bought\nin this swap. Certain on-chain sources do not\nallow specifying buyAmount, when using buyAmount these sources are excluded."
+					},
+					"sellAmount": {
+						"type": "string",
+						"description": "The amount of sellToken (in sellToken units) that would be\nsold in this swap. Specifying sellAmount is the\nrecommended way to interact with Hyper DEX API as it covers all on-chain sources."
+					},
+					"buyTokenAddress": {
+						"type": "string",
+						"description": "The ERC20 token address of the token you want to receive in quote."
+					},
+					"sellTokenAddress": {
+						"type": "string",
+						"description": "The ERC20 token address of the token you want to sell with quote."
+					},
+					"allowanceTarget": {
+						"type": "string",
+						"description": "The target contract address for which the\nuser needs to have an allowance in order to be able\nto complete the swap. For swaps with \"ETH\"\nas sellToken, wrapping \"ETH\" to \"WETH\" or\nunwrapping \"WETH\" to \"ETH\" no allowance is needed,\na null address of 0x0000000000000000000000000000000000000000 is then returned instead."
+					},
+					"price": {
+						"type": "string",
+						"description": "If buyAmount was specified in the request it provides the price\nof buyToken in sellToken and vice versa. This price does not\ninclude the slippage provided in the request above, and therefore represents the best possible price."
+					},
+					"guaranteedPrice": {
+						"type": "string",
+						"description": "The price which must be met or else the entire transaction will revert.\nThis price is influenced by the slippagePercentage parameter.\nOn-chain sources may encounter price movements from quote to settlement."
+					},
+					"sources": {
+						"items": {
+							"$ref": "#/components/schemas/SwapQuoteLiquiditySource"
+						},
+						"type": "array",
+						"description": "The percentage distribution of buyAmount or sellAmount\nsplit between each liquidity source.\nEx: [{ name: '0x', proportion: \"0.8\" }, { name: 'Kyber', proportion: \"0.2\"}, ...]"
+					},
+					"sellTokenToEthRate": {
+						"type": "string",
+						"description": "The rate between ETH and sellToken"
+					},
+					"buyTokenToEthRate": {
+						"type": "string",
+						"description": "The rate between ETH and buyToken"
+					},
+					"protocolFee": {
+						"type": "string",
+						"description": "The maximum amount of ether that will be paid\ntowards the protocol fee (in wei), and what\nis used to compute the value field of the transaction."
+					},
+					"minimumProtocolFee": {
+						"type": "string",
+						"description": "The minimum amount of ether that will\nbe paid towards the protocol fee (in wei)\nduring the transaction."
+					},
+					"from": {
+						"type": "string",
+						"description": "Taker account address"
+					},
+					"to": {
+						"type": "string",
+						"description": "The address of the contract to send call data to."
+					},
+					"value": {
+						"type": "string",
+						"description": "The amount of ether (in wei) that should be sent with the transaction.\n(Assuming protocolFee is paid in ether)."
+					},
+					"data": {
+						"type": "string",
+						"description": "The call data required to be sent to the to contract address."
+					}
+				},
+				"required": [
+					"chainId",
+					"buyAmount",
+					"sellAmount",
+					"buyTokenAddress",
+					"sellTokenAddress",
+					"price",
+					"guaranteedPrice",
+					"sources",
+					"sellTokenToEthRate",
+					"buyTokenToEthRate",
+					"protocolFee",
+					"minimumProtocolFee",
+					"from",
+					"to",
+					"value",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SwapQuoteQuery": {
+				"properties": {
+					"sellToken": {
+						"type": "string",
+						"description": "The ERC 20 token address or symbol of the token you want to sell. Native token such as \"ETH\" can be provided as a 'NATIVE' keyword."
+					},
+					"buyToken": {
+						"type": "string",
+						"description": "The ERC 20 token address or symbol of the token you want to receive. Native token such as \"ETH\" can be provided as a 'NATIVE' keyword."
+					},
+					"sellAmount": {
+						"type": "string",
+						"description": "The amount of sellToken (in sellToken base units) you want to send."
+					},
+					"buyAmount": {
+						"type": "string",
+						"description": "The amount of buyToken (in buyToken base units) you want to receive."
 					},
 					"takerAddress": {
-						"type": "string"
+						"type": "string",
+						"description": "The address which will fill the quote."
 					},
 					"slippagePercentage": {
-						"type": "string"
+						"type": "string",
+						"description": "The maximum acceptable slippage of the buyToken amount if sellAmount is provided;\nThe maximum acceptable slippage of the sellAmount amount if buyAmount is provided.\nE.g 0.03 for 3% slippage allowed."
 					},
 					"excludedSources": {
-						"type": "string"
+						"type": "string",
+						"description": "Liquidity sources (Uniswap, SushiSwap, 0x, Curve etc) that will not be\nincluded in the provided quote. See here for a full list of sources"
 					}
 				},
 				"required": [
@@ -153,13 +298,15 @@
 		},
 		"/swap/quote": {
 			"post": {
-				"operationId": "PostPrice",
+				"operationId": "PostQuote",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
-								"schema": {},
+								"schema": {
+									"$ref": "#/components/schemas/SwapQuoteResponse"
+								},
 								"examples": {
 									"Example 1": {
 										"value": {
@@ -176,7 +323,7 @@
 						}
 					}
 				},
-				"description": "Nearly identical to /swap/quote, but with a few key differences:\nRather than returning a transaction that can be submitted to an Ethereum node,\nthis resource simply indicates the pricing that would be\navailable for an analogous call to /swap/quote.",
+				"description": "Get an easy-to-consume quote for buying or selling any ERC20 token.\nThe return format is a valid unsigned Ethereum transaction and can be submitted\ndirectly to an Ethereum node (or the nodes of other chains if applicable)\nto complete the swap. For transactions where the sellToken is not ETH, you will\nhave to set your allowances.",
 				"summary": "Get Swap quote",
 				"tags": [
 					"Swap"
@@ -188,7 +335,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/QuoteParams"
+								"$ref": "#/components/schemas/SwapQuoteQuery"
 							}
 						}
 					}

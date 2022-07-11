@@ -1,10 +1,10 @@
 import { Block, BlockTag } from '@ethersproject/abstract-provider';
-import { BaseProvider } from '@ethersproject/providers';
 import { BigNumber, getDefaultProvider } from 'ethers';
+import { Provider } from '../types';
 
 const DEFAULT_BLOCK_GAS_LIMIT = BigNumber.from(20_000_000);
 
-export function getProvider(rpcUrl: string): BaseProvider {
+export function getProvider(rpcUrl: string): Provider {
   const provider = getDefaultProvider(rpcUrl);
 
   provider.getBlock = async function (blockNumberOrTag: BlockTag): Promise<Block> {
@@ -49,5 +49,5 @@ export function getProvider(rpcUrl: string): BaseProvider {
     };
   }
 
-  return provider;
+  return provider as Provider;
 }

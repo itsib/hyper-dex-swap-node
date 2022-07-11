@@ -1,20 +1,22 @@
 import { NextFunction, Request, Response } from 'express';
-import { HTTPException } from '@tsed/exceptions';
+import { BadRequest, HTTPException } from '@tsed/exceptions';
 import { logger, parseRpcCallError } from '../utils';
 
 export const errorMiddleware = (error: HTTPException | Error, req: Request, res: Response, next: NextFunction) => {
-  if (error instanceof HTTPException) {
-    if (error.status >= 500) {
+  if ((error as any).type === 'HTTP_EXCEPTION') {
+    const status = (error as HTTPException).status;
+
+    if (status >= 500) {
       logger.error(error);
 
-      res.status(error.status).json({ status: error.status, message: error.message });
+      res.status(status).json({ status: status, message: error.message });
     } else {
       logger.warn(error);
 
-      if (error.status === 400) {
-        res.status(error.status).json({ status: error.status, message: error.message, validationErrors: error.body || [] });
+      if (status === 400) {
+        res.status(status).json({ status: status, message: error.message, validationErrors: (error as BadRequest).body || [] });
       } else {
-        res.status(error.status).json({ status: error.status, message: error.message });
+        res.status(status).json({ status: status, message: error.message });
       }
     }
   } else {

@@ -11,12 +11,18 @@
     "dev:watch": "nodemon",
     "bump": "./node_modules/.bin/bump --tag --push --all",
     "doc": "ts-node ./render-doc.ts",
-    "clean": "rm -rf ./build"
+    "clean": "rm -rf ./build",
+    "postinstall": "node patch.js"
   },
   "author": "Sergey <itsib.su@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@0x/asset-swapper": "^16.63.0",
     "@tsed/exceptions": "^6.116.3",
+    "ajv": "^8.11.0",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^2.1.1",
+    "better-ajv-errors": "^1.2.0",
     "chalk": "^4.1.2",
     "compression": "^1.7.4",
     "cors": "^2.8.5",

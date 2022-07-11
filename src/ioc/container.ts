@@ -1,9 +1,9 @@
-import { BaseProvider } from '@ethersproject/providers';
 import { sync } from 'glob';
 import { Container } from 'inversify';
 import { join } from 'path';
 import { CONFIG } from '../config';
-import { SwapService, ISwapService } from '../services';
+import { ISwapService, SwapService, IOptionsService, OptionsService } from '../services';
+import { Provider } from '../types';
 import { getProvider } from '../utils';
 
 /**
@@ -17,7 +17,8 @@ sync(join(__dirname, '../controllers', '**', `*.controller.${ext}`)).forEach((fi
  */
 const container = new Container({ defaultScope: 'Singleton' });
 
-container.bind<BaseProvider>('BaseProvider').toConstantValue(getProvider(CONFIG.RPC_URL));
+container.bind<Provider>('Provider').toConstantValue(getProvider(CONFIG.RPC_URL));
 container.bind<ISwapService>('SwapService').to(SwapService);
+container.bind<IOptionsService>('OptionsService').to(OptionsService);
 
 export { container };

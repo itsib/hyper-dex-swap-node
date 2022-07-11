@@ -6,7 +6,8 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"LiquiditySource": {
+			"ERC20BridgeSource": {
+				"description": "DEX sources to aggregate.",
 				"enum": [
 					"Native",
 					"Uniswap",
@@ -72,6 +73,37 @@
 					"Velodrome"
 				],
 				"type": "string"
+			},
+			"QuoteParams": {
+				"properties": {
+					"sellToken": {
+						"type": "string"
+					},
+					"buyToken": {
+						"type": "string"
+					},
+					"sellAmount": {
+						"type": "string"
+					},
+					"buyAmount": {
+						"type": "string"
+					},
+					"takerAddress": {
+						"type": "string"
+					},
+					"slippagePercentage": {
+						"type": "string"
+					},
+					"excludedSources": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"sellToken",
+					"buyToken"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -93,7 +125,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/LiquiditySource"
+										"$ref": "#/components/schemas/ERC20BridgeSource"
 									},
 									"type": "array"
 								},
@@ -117,6 +149,50 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/swap/quote": {
+			"post": {
+				"operationId": "PostPrice",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"sellToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+											"buyToken": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+											"sellAmount": "9995002498750625",
+											"takerAddress": "0xf18A3af576c7871fEA9f8F3E54e8d0E71C98F206",
+											"slippagePercentage": "0.01",
+											"excludedSources": "Uniswap,Uniswap_V3"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Nearly identical to /swap/quote, but with a few key differences:\nRather than returning a transaction that can be submitted to an Ethereum node,\nthis resource simply indicates the pricing that would be\navailable for an analogous call to /swap/quote.",
+				"summary": "Get Swap quote",
+				"tags": [
+					"Swap"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/QuoteParams"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

@@ -2,19 +2,13 @@ version: '3'
 
 services:
   relay:
-    image: sergeyitsib/hyper-dex-swap-node
+    image: sergeyitsib/hyper-dex-swap-node:latest
     container_name: hyper-dex-swap-node
     restart: always
     env_file:
       - ./.env
     environment:
-      PORT: '3200'
+      PORT: '3201'
       CORS_ORIGIN: '*'
     ports:
-      - '3200:3200'
-    networks:
-      - hyper-dex-swap-node-net
-
-networks:
-  hyper-dex-swap-node-net:
-    driver: bridge
+      - '3201:3201'

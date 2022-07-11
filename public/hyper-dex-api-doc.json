@@ -255,7 +255,7 @@
 	},
 	"info": {
 		"title": "Hyper DEX swap API.",
-		"version": "1.0.2",
+		"version": "1.0.3",
 		"description": "The Hyper DEX API. In aggregate, the APIs provide interfaces to Hyper DEX liquidity. Everything can be run monolithically via yarn start and docker-compose up as described in Getting Started."
 	},
 	"openapi": "3.0.0",

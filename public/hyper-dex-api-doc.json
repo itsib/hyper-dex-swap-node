@@ -255,7 +255,7 @@
 	},
 	"info": {
 		"title": "Hyper DEX swap API.",
-		"version": "1.0.3",
+		"version": "1.0.4",
 		"description": "The Hyper DEX API. In aggregate, the APIs provide interfaces to Hyper DEX liquidity. Everything can be run monolithically via yarn start and docker-compose up as described in Getting Started."
 	},
 	"openapi": "3.0.0",
@@ -314,7 +314,7 @@
 											"buyToken": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
 											"sellAmount": "9995002498750625",
 											"takerAddress": "0xf18A3af576c7871fEA9f8F3E54e8d0E71C98F206",
-											"slippagePercentage": "0.01",
+											"slippagePercentage": "0.005",
 											"excludedSources": "Uniswap,Uniswap_V3"
 										}
 									}
@@ -340,6 +340,97 @@
 						}
 					}
 				}
+			},
+			"get": {
+				"operationId": "GetQuote",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SwapQuoteResponse"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"sellToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
+											"buyToken": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+											"sellAmount": "9995002498750625",
+											"takerAddress": "0xf18A3af576c7871fEA9f8F3E54e8d0E71C98F206",
+											"slippagePercentage": "0.005",
+											"excludedSources": "Uniswap,Uniswap_V3"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"description": "Get an easy-to-consume quote for buying or selling any ERC20 token.\nThe return format is a valid unsigned Ethereum transaction and can be submitted\ndirectly to an Ethereum node (or the nodes of other chains if applicable)\nto complete the swap. For transactions where the sellToken is not ETH, you will\nhave to set your allowances.",
+				"summary": "Get Swap quote",
+				"tags": [
+					"Swap"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "sellToken",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "buyToken",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sellAmount",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "buyAmount",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "takerAddress",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "slippagePercentage",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "excludedSources",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},

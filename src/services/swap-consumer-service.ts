@@ -48,9 +48,6 @@ import {
   WETH_TRANSFORMER_ABI_CODER,
 } from '../utils';
 
-// makerToken === buyToken
-// takerToken === sellToken
-
 /**
  * Use the same order in IPancakeSwapFeature.sol
  */
@@ -95,7 +92,6 @@ export class SwapConsumerService {
     wethTransformer: number;
     payTakerTransformer: number;
     fillQuoteTransformer: number;
-    affiliateFeeTransformer: number;
     positiveSlippageFeeTransformer: number;
   };
 
@@ -114,10 +110,6 @@ export class SwapConsumerService {
       ),
       fillQuoteTransformer: findTransformerNonce(
         CONFIG.FILL_QUOTE_TRANSFORMER,
-        CONFIG.EXCHANGE_PROXY_TRANSFORMER_DEPLOYER,
-      ),
-      affiliateFeeTransformer: findTransformerNonce(
-        CONFIG.AFFILIATE_FEE_TRANSFORMER,
         CONFIG.EXCHANGE_PROXY_TRANSFORMER_DEPLOYER,
       ),
       positiveSlippageFeeTransformer: findTransformerNonce(

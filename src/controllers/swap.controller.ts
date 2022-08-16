@@ -67,7 +67,7 @@ export class SwapController extends BaseHttpController {
     @queryParam('takerAddress') @Query() takerAddress?: SwapQuoteQuery['takerAddress'],
     @queryParam('slippagePercentage') @Query() slippagePercentage?: SwapQuoteQuery['slippagePercentage'],
     @queryParam('excludedSources') @Query() excludedSources?: SwapQuoteQuery['excludedSources'],
-  ) {
+  ): Promise<SwapQuoteResponse> {
     return this._swapService.getQuote({sellToken, buyToken, sellAmount, buyAmount, takerAddress, slippagePercentage, excludedSources});
   }
 }

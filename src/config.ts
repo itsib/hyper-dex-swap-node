@@ -21,8 +21,6 @@ export const CONFIG = {
   CORS_ORIGIN: process.env.CORS_ORIGIN || '*',
   // Chain settings
   RPC_URL: required(process.env.RPC_URL, 'The environment variable RPC_URL is not set.'),
-  // Quoter settings
-  QUOTE_ORDER_EXPIRATION_BUFFER_MS: validateInteger(process.env.QUOTE_ORDER_EXPIRATION_BUFFER_MS, 60000, 'QUOTE_ORDER_EXPIRATION_BUFFER should be valid number'),
   // Contracts addresses
   EXCHANGE_PROXY: validateAddress(process.env.EXCHANGE_PROXY, true, 'The environment variable EXCHANGE_PROXY is not set. You should provide valid contract address'),
   EXCHANGE_PROXY_TRANSFORMER_DEPLOYER: validateAddress(process.env.EXCHANGE_PROXY_TRANSFORMER_DEPLOYER, true, 'The environment variable EXCHANGE_PROXY_TRANSFORMER_DEPLOYER is not set. You should provide valid contract address'),
@@ -30,7 +28,6 @@ export const CONFIG = {
   EXCHANGE_PROXY_LIQUIDITY_PROVIDER_SANDBOX: validateAddress(process.env.EXCHANGE_PROXY_LIQUIDITY_PROVIDER_SANDBOX, true, 'The environment variable EXCHANGE_PROXY_LIQUIDITY_PROVIDER_SANDBOX is not set. You should provide valid contract address'),
   WETH_TRANSFORMER: validateAddress(process.env.WETH_TRANSFORMER, true, 'The environment variable WETH_TRANSFORMER is not set. You should provide valid contract address'),
   PAY_TAKER_TRANSFORMER: validateAddress(process.env.PAY_TAKER_TRANSFORMER, true, 'The environment variable PAY_TAKER_TRANSFORMER is not set. You should provide valid contract address'),
-  AFFILIATE_FEE_TRANSFORMER: validateAddress(process.env.AFFILIATE_FEE_TRANSFORMER, true, 'The environment variable AFFILIATE_FEE_TRANSFORMER is not set. You should provide valid contract address'),
   FILL_QUOTE_TRANSFORMER: validateAddress(process.env.FILL_QUOTE_TRANSFORMER, true, 'The environment variable FILL_QUOTE_TRANSFORMER is not set. You should provide valid contract address'),
   POSITIVE_SLIPPAGE_FEE_TRANSFORMER: validateAddress(process.env.POSITIVE_SLIPPAGE_FEE_TRANSFORMER, true, 'The environment variable POSITIVE_SLIPPAGE_FEE_TRANSFORMER is not set. You should provide valid contract address'),
   ERC20_BRIDGE_SAMPLER: validateAddress(process.env.ERC20_BRIDGE_SAMPLER, false, 'Invalid sampler contract address ERC20_BRIDGE_SAMPLER'),

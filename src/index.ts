@@ -7,7 +7,7 @@ import cors from 'cors';
 import express, { Application } from 'express';
 import { CONFIG } from './config';
 import { logger } from './utils';
-import { container } from './ioc/container';
+import { buildContainer } from './ioc/container';
 import { errorMiddleware, httpLogMiddleware } from './middlewares';
 
 process.on('uncaughException', (e) => {
@@ -31,6 +31,7 @@ startApp().catch(e => {
 });
 
 async function startApp(): Promise<void> {
+  const container = await buildContainer();
   const server = new InversifyExpressServer(container);
 
   server.setConfig((app: Application) => {
@@ -57,7 +58,6 @@ async function startApp(): Promise<void> {
   app.listen(CONFIG.PORT, () => {
     logger.info(`ENV: ${CONFIG.NODE_ENV}`);
     logger.info(`LOG_LEVEL: ${CONFIG.LOG_LEVEL}`);
-    logger.info(`RPC_URL: ${CONFIG.RPC_URL}`);
     logger.info(`App listening on the port ${CONFIG.PORT}`);
   });
 }

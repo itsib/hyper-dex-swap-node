@@ -13,6 +13,7 @@ export class Web3Provider implements Web3JsV3Provider {
   async send(method: string, params?: any[]): Promise<any> {
     const id = this._nextId++;
     const request = { method, params, id, jsonrpc: '2.0' };
-    return fetchJson(this._provider.connection, JSON.stringify(request));
+    const result = await fetchJson(this._provider.connection, JSON.stringify(request));
+    return result;
   }
 }

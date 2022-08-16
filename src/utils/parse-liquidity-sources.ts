@@ -1,12 +1,12 @@
-import { ERC20BridgeSource } from '@0x/asset-swapper';
 import { BadRequest } from '@tsed/exceptions';
+import { BridgeSource } from '../types';
 
-export function parseLiquiditySources(value: string | undefined, defaultSources: ERC20BridgeSource[], field: string): ERC20BridgeSource[] {
+export function parseLiquiditySources(value: string | undefined, defaultSources: BridgeSource[], field: string): BridgeSource[] {
   if (!value) {
     return defaultSources;
   }
-  const sources = value.split(',').map(i => i.trim()) as ERC20BridgeSource[];
-  const supportedSources = Object.values(ERC20BridgeSource);
+  const sources = value.split(',').map(i => i.trim()) as BridgeSource[];
+  const supportedSources = Object.values(BridgeSource);
   const unsupportedSources = sources.filter(i => !supportedSources.includes(i));
 
   if (unsupportedSources.length) {

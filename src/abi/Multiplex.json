@@ -1,0 +1,541 @@
+[
+  {
+    "inputs": [
+      {
+        "name": "zeroExAddress",
+        "type": "address"
+      },
+      {
+        "name": "weth",
+        "type": "address"
+      },
+      {
+        "name": "sandbox",
+        "type": "address"
+      },
+      {
+        "name": "uniswapFactory",
+        "type": "address"
+      },
+      {
+        "name": "sushiswapFactory",
+        "type": "address"
+      },
+      {
+        "name": "uniswapPairInitCodeHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "sushiswapPairInitCodeHash",
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "orderHash",
+        "type": "bytes32",
+        "indexed": false
+      },
+      {
+        "name": "maker",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "expiry",
+        "type": "uint64",
+        "indexed": false
+      }
+    ],
+    "name": "ExpiredOtcOrder",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "orderHash",
+        "type": "bytes32",
+        "indexed": false
+      },
+      {
+        "name": "maker",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "expiry",
+        "type": "uint64",
+        "indexed": false
+      }
+    ],
+    "name": "ExpiredRfqOrder",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "name": "inputToken",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "outputToken",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "inputTokenAmount",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "outputTokenAmount",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "provider",
+        "type": "address",
+        "indexed": false
+      },
+      {
+        "name": "recipient",
+        "type": "address",
+        "indexed": false
+      }
+    ],
+    "name": "LiquidityProviderSwap",
+    "outputs": [],
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "EIP712_DOMAIN_SEPARATOR",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "FEATURE_NAME",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "FEATURE_VERSION",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "params",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "inputToken",
+            "type": "address"
+          },
+          {
+            "name": "outputToken",
+            "type": "address"
+          },
+          {
+            "name": "sellAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "calls",
+            "type": "tuple[]",
+            "components": [
+              {
+                "name": "id",
+                "type": "uint8"
+              },
+              {
+                "name": "sellAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "data",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "useSelfBalance",
+            "type": "bool"
+          },
+          {
+            "name": "recipient",
+            "type": "address"
+          }
+        ]
+      },
+      {
+        "name": "wrappedCallData",
+        "type": "bytes"
+      },
+      {
+        "name": "sellAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "_batchSellLiquidityProviderExternal",
+    "outputs": [
+      {
+        "name": "boughtAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "params",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "inputToken",
+            "type": "address"
+          },
+          {
+            "name": "outputToken",
+            "type": "address"
+          },
+          {
+            "name": "sellAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "calls",
+            "type": "tuple[]",
+            "components": [
+              {
+                "name": "id",
+                "type": "uint8"
+              },
+              {
+                "name": "sellAmount",
+                "type": "uint256"
+              },
+              {
+                "name": "data",
+                "type": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "useSelfBalance",
+            "type": "bool"
+          },
+          {
+            "name": "recipient",
+            "type": "address"
+          }
+        ]
+      },
+      {
+        "name": "wrappedCallData",
+        "type": "bytes"
+      },
+      {
+        "name": "sellAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "_batchSellUniswapV2External",
+    "outputs": [
+      {
+        "name": "boughtAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "migrate",
+    "outputs": [
+      {
+        "name": "success",
+        "type": "bytes4"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "outputToken",
+        "type": "address"
+      },
+      {
+        "name": "calls",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "id",
+            "type": "uint8"
+          },
+          {
+            "name": "sellAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "minBuyAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "multiplexBatchSellEthForToken",
+    "outputs": [
+      {
+        "name": "boughtAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "inputToken",
+        "type": "address"
+      },
+      {
+        "name": "calls",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "id",
+            "type": "uint8"
+          },
+          {
+            "name": "sellAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "sellAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "minBuyAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "multiplexBatchSellTokenForEth",
+    "outputs": [
+      {
+        "name": "boughtAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "inputToken",
+        "type": "address"
+      },
+      {
+        "name": "outputToken",
+        "type": "address"
+      },
+      {
+        "name": "calls",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "id",
+            "type": "uint8"
+          },
+          {
+            "name": "sellAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "sellAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "minBuyAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "multiplexBatchSellTokenForToken",
+    "outputs": [
+      {
+        "name": "boughtAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "calls",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "id",
+            "type": "uint8"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "minBuyAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "multiplexMultiHopSellEthForToken",
+    "outputs": [
+      {
+        "name": "boughtAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "calls",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "id",
+            "type": "uint8"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "sellAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "minBuyAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "multiplexMultiHopSellTokenForEth",
+    "outputs": [
+      {
+        "name": "boughtAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "tokens",
+        "type": "address[]"
+      },
+      {
+        "name": "calls",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "id",
+            "type": "uint8"
+          },
+          {
+            "name": "data",
+            "type": "bytes"
+          }
+        ]
+      },
+      {
+        "name": "sellAmount",
+        "type": "uint256"
+      },
+      {
+        "name": "minBuyAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "multiplexMultiHopSellTokenForToken",
+    "outputs": [
+      {
+        "name": "boughtAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

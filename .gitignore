@@ -4,8 +4,11 @@
 
 node_modules/
 
+# Builded files
 build/
 logs/
 public/plasma-gas-station-api-doc.json
+src/abi/ERC20BridgeSampler.json
+src/artifacts/
 
 .env

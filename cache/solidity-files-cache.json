@@ -1,0 +1,2766 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/ApproximateBuys.sol": {
+      "lastModificationDate": 1658134727939,
+      "contentHash": "db6a907737af7ccdaeb5955704f0d166",
+      "sourceName": "contracts/ApproximateBuys.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libs/utils/LibMathV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "ApproximateBuys"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/LibMathV06.sol": {
+      "lastModificationDate": 1658134572254,
+      "contentHash": "13cf73e170f3cf1ad2f3239c1da5773d",
+      "sourceName": "contracts/libs/utils/LibMathV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./LibSafeMathV06.sol",
+        "./errors/LibRichErrorsV06.sol",
+        "./errors/LibMathRichErrorsV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibMathV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/LibSafeMathV06.sol": {
+      "lastModificationDate": 1658135800324,
+      "contentHash": "5a103bd4064e08ab0f3a8d1a633752f9",
+      "sourceName": "contracts/libs/utils/LibSafeMathV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./errors/LibRichErrorsV06.sol",
+        "./errors/LibSafeMathRichErrorsV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibSafeMathV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/errors/LibRichErrorsV06.sol": {
+      "lastModificationDate": 1658134572234,
+      "contentHash": "0aafa29cbe3bbcc57bf434334048d239",
+      "sourceName": "contracts/libs/utils/errors/LibRichErrorsV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibRichErrorsV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/errors/LibMathRichErrorsV06.sol": {
+      "lastModificationDate": 1658134572234,
+      "contentHash": "83d24dafb75ef15876fe8d40a6733a2b",
+      "sourceName": "contracts/libs/utils/errors/LibMathRichErrorsV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibMathRichErrorsV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/errors/LibSafeMathRichErrorsV06.sol": {
+      "lastModificationDate": 1658134572242,
+      "contentHash": "d17ae9cc52bff7becc6a773f237bf633",
+      "sourceName": "contracts/libs/utils/errors/LibSafeMathRichErrorsV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibSafeMathRichErrorsV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/SmoothySampler.sol": {
+      "lastModificationDate": 1658132794952,
+      "contentHash": "4bb2f401b3ce4f8fad93be4822b24f6a",
+      "sourceName": "contracts/SmoothySampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ApproximateBuys.sol",
+        "./SamplerUtils.sol",
+        "./interfaces/ISmoothy.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "SmoothySampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/SamplerUtils.sol": {
+      "lastModificationDate": 1658134754870,
+      "contentHash": "aa782dfc0360ab625ff40d2a97d9e85a",
+      "sourceName": "contracts/SamplerUtils.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libs/erc20/LibERC20TokenV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "SamplerUtils"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/ISmoothy.sol": {
+      "lastModificationDate": 1658132794872,
+      "contentHash": "93a79084c0fbb7cc971c4509fa2aaa2d",
+      "sourceName": "contracts/interfaces/ISmoothy.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "ISmoothy"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/erc20/LibERC20TokenV06.sol": {
+      "lastModificationDate": 1658134622962,
+      "contentHash": "d12647d9868150de153a4da6552941d1",
+      "sourceName": "contracts/libs/erc20/LibERC20TokenV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/errors/LibRichErrorsV06.sol",
+        "../utils/LibBytesV06.sol",
+        "./IERC20TokenV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibERC20TokenV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/LibBytesV06.sol": {
+      "lastModificationDate": 1658134572254,
+      "contentHash": "8024641d8ab7e420c404399bce8cb267",
+      "sourceName": "contracts/libs/utils/LibBytesV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./errors/LibBytesRichErrorsV06.sol",
+        "./errors/LibRichErrorsV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibBytesV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/erc20/IERC20TokenV06.sol": {
+      "lastModificationDate": 1658134539808,
+      "contentHash": "0c992877e6c4037cdf4680426b86ee5e",
+      "sourceName": "contracts/libs/erc20/IERC20TokenV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "IERC20TokenV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/errors/LibBytesRichErrorsV06.sol": {
+      "lastModificationDate": 1658134572238,
+      "contentHash": "1c4969df03f51672852c7844d75e7789",
+      "sourceName": "contracts/libs/utils/errors/LibBytesRichErrorsV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibBytesRichErrorsV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/UniswapSampler.sol": {
+      "lastModificationDate": 1658132794956,
+      "contentHash": "0430fb1359aeec5195a00f9d54918071",
+      "sourceName": "contracts/UniswapSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IUniswapExchangeQuotes.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IUniswapExchangeFactory",
+        "UniswapSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IUniswapExchangeQuotes.sol": {
+      "lastModificationDate": 1658132794888,
+      "contentHash": "7b0a1125e4e557f7b61a60fb6d320d5a",
+      "sourceName": "contracts/interfaces/IUniswapExchangeQuotes.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IUniswapExchangeQuotes"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/ERC20BridgeSampler.sol": {
+      "lastModificationDate": 1658132798140,
+      "contentHash": "50962358b70c4e3dd4a6c0a1240e4d00",
+      "sourceName": "contracts/ERC20BridgeSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./BalancerSampler.sol",
+        "./BalancerV2Sampler.sol",
+        "./BancorSampler.sol",
+        "./CurveSampler.sol",
+        "./DODOSampler.sol",
+        "./DODOV2Sampler.sol",
+        "./Eth2DaiSampler.sol",
+        "./KyberSampler.sol",
+        "./KyberDmmSampler.sol",
+        "./LidoSampler.sol",
+        "./LiquidityProviderSampler.sol",
+        "./MakerPSMSampler.sol",
+        "./MultiBridgeSampler.sol",
+        "./MStableSampler.sol",
+        "./MooniswapSampler.sol",
+        "./NativeOrderSampler.sol",
+        "./ShellSampler.sol",
+        "./SmoothySampler.sol",
+        "./TwoHopSampler.sol",
+        "./UniswapSampler.sol",
+        "./UniswapV2Sampler.sol",
+        "./UniswapV3Sampler.sol",
+        "./UtilitySampler.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "ERC20BridgeSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/BalancerSampler.sol": {
+      "lastModificationDate": 1658132794896,
+      "contentHash": "1beba3eaf47bfde0c734f6261808858e",
+      "sourceName": "contracts/BalancerSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IBalancer.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "BalancerSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/BalancerV2Sampler.sol": {
+      "lastModificationDate": 1658132794896,
+      "contentHash": "c9042fd6edeba517addb32fdde979212",
+      "sourceName": "contracts/BalancerV2Sampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "BalancerV2Sampler",
+        "IAsset",
+        "IBalancerV2Vault"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/BancorSampler.sol": {
+      "lastModificationDate": 1658132794900,
+      "contentHash": "5b23b9946b5d388ce782953828f9245c",
+      "sourceName": "contracts/BancorSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IBancor.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "BancorSampler",
+        "CompilerHack"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/CurveSampler.sol": {
+      "lastModificationDate": 1658132794900,
+      "contentHash": "7dd3f26d02b2e8039f5ab27cf6418c58",
+      "sourceName": "contracts/CurveSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/ICurve.sol",
+        "./ApproximateBuys.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "CurveSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/DODOSampler.sol": {
+      "lastModificationDate": 1658132794904,
+      "contentHash": "a10b835c6fd2f1bf8b92f1bc738a0570",
+      "sourceName": "contracts/DODOSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ApproximateBuys.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "DODOSampler",
+        "IDODO",
+        "IDODOHelper",
+        "IDODOZoo"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/DODOV2Sampler.sol": {
+      "lastModificationDate": 1658132794908,
+      "contentHash": "26e5e3a457ca8167274d3233ff3d6f2d",
+      "sourceName": "contracts/DODOV2Sampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ApproximateBuys.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "DODOV2Sampler",
+        "IDODOV2Pool",
+        "IDODOV2Registry"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/Eth2DaiSampler.sol": {
+      "lastModificationDate": 1658132794912,
+      "contentHash": "f449bb87fad40c1bd01d4c7c3793e4fc",
+      "sourceName": "contracts/Eth2DaiSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IEth2Dai.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "Eth2DaiSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/KyberSampler.sol": {
+      "lastModificationDate": 1658132794920,
+      "contentHash": "9d89189dd3cc3b396066aa71f49d9988",
+      "sourceName": "contracts/KyberSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IKyberNetwork.sol",
+        "./ApproximateBuys.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "KyberSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/KyberDmmSampler.sol": {
+      "lastModificationDate": 1658132794916,
+      "contentHash": "ac5b530c0d7061c629d5d754d0390a98",
+      "sourceName": "contracts/KyberDmmSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IKyberDmmFactory",
+        "IKyberDmmPool",
+        "IKyberDmmRouter",
+        "KyberDmmSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/LidoSampler.sol": {
+      "lastModificationDate": 1658132794920,
+      "contentHash": "c15646e1d273d1aeb415737887328aa6",
+      "sourceName": "contracts/LidoSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "LidoSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/LiquidityProviderSampler.sol": {
+      "lastModificationDate": 1658135069766,
+      "contentHash": "e090176816159c6375b86e50b34fc0fa",
+      "sourceName": "contracts/LiquidityProviderSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libs/utils/LibBytesV06.sol",
+        "./libs/vendor/ILiquidityProvider.sol",
+        "./ApproximateBuys.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "LiquidityProviderSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/MakerPSMSampler.sol": {
+      "lastModificationDate": 1658134727943,
+      "contentHash": "2115277e5678f27ae733a4cd8304815b",
+      "sourceName": "contracts/MakerPSMSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./SamplerUtils.sol",
+        "./libs/utils/LibMathV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IPSM",
+        "IVAT",
+        "MakerPSMSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/MultiBridgeSampler.sol": {
+      "lastModificationDate": 1658132794940,
+      "contentHash": "019f49f3e12973ff1bd6fd8feb4a09df",
+      "sourceName": "contracts/MultiBridgeSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IMultiBridge.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "MultiBridgeSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/MStableSampler.sol": {
+      "lastModificationDate": 1658132794936,
+      "contentHash": "9b6751e793024cb97e978dd67fef961c",
+      "sourceName": "contracts/MStableSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IMStable.sol",
+        "./ApproximateBuys.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "MStableSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/MooniswapSampler.sol": {
+      "lastModificationDate": 1658132794936,
+      "contentHash": "f8dcc29d5c83f0d1f680d86707e74246",
+      "sourceName": "contracts/MooniswapSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IMooniswap.sol",
+        "./ApproximateBuys.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "MooniswapSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/NativeOrderSampler.sol": {
+      "lastModificationDate": 1658135360845,
+      "contentHash": "15c3c0b87d70bfb93aec478501e27f26",
+      "sourceName": "contracts/NativeOrderSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libs/erc20/LibERC20TokenV06.sol",
+        "./libs/utils/LibMathV06.sol",
+        "./libs/utils/LibBytesV06.sol",
+        "./libs/utils/LibSafeMathV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IExchange",
+        "NativeOrderSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/ShellSampler.sol": {
+      "lastModificationDate": 1658132794948,
+      "contentHash": "55733b1f99ae1a72ca6567ef015e2bda",
+      "sourceName": "contracts/ShellSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ApproximateBuys.sol",
+        "./interfaces/IShell.sol",
+        "./SamplerUtils.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "ShellSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/TwoHopSampler.sol": {
+      "lastModificationDate": 1658134727939,
+      "contentHash": "8aaf9e1f715f1609d7bc42d607d92970",
+      "sourceName": "contracts/TwoHopSampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libs/utils/LibBytesV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "TwoHopSampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/UniswapV2Sampler.sol": {
+      "lastModificationDate": 1658132794960,
+      "contentHash": "91266e27e19f88b266ed2b1c4bc686c8",
+      "sourceName": "contracts/UniswapV2Sampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IUniswapV2Router01.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "UniswapV2Sampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/UniswapV3Sampler.sol": {
+      "lastModificationDate": 1658135436470,
+      "contentHash": "786b210e54bc1ab5063997542bc7844d",
+      "sourceName": "contracts/UniswapV3Sampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libs/erc20/IERC20TokenV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IUniswapV3Factory",
+        "IUniswapV3Pool",
+        "IUniswapV3Quoter",
+        "UniswapV3Sampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/UtilitySampler.sol": {
+      "lastModificationDate": 1658134539820,
+      "contentHash": "6b4ddee9aff2377a14cd90c81125829d",
+      "sourceName": "contracts/UtilitySampler.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libs/erc20/LibERC20TokenV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "UtilitySampler"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IBalancer.sol": {
+      "lastModificationDate": 1658132794872,
+      "contentHash": "90dbffa5bb2c165426f8caf3ea10c13b",
+      "sourceName": "contracts/interfaces/IBalancer.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IBalancer"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IBancor.sol": {
+      "lastModificationDate": 1658135399648,
+      "contentHash": "99b0825a0fb2cb6c946417c562d2cbcd",
+      "sourceName": "contracts/interfaces/IBancor.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IBancor",
+        "IBancorNetwork",
+        "IBancorRegistry"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/ICurve.sol": {
+      "lastModificationDate": 1658132794852,
+      "contentHash": "53891a890d84397f0745e41de6ba5e7e",
+      "sourceName": "contracts/interfaces/ICurve.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "ICurve"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IEth2Dai.sol": {
+      "lastModificationDate": 1658132794864,
+      "contentHash": "89b4066c3fa89f7dc01b6bf61a25b839",
+      "sourceName": "contracts/interfaces/IEth2Dai.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IEth2Dai"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IKyberNetwork.sol": {
+      "lastModificationDate": 1658132794880,
+      "contentHash": "bf5f32f425031f07bbd1d638ed7a7fbf",
+      "sourceName": "contracts/interfaces/IKyberNetwork.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IKyberHintHandler",
+        "IKyberNetwork",
+        "IKyberNetworkProxy"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/vendor/ILiquidityProvider.sol": {
+      "lastModificationDate": 1658135069762,
+      "contentHash": "39522e58cde1c075ddf230531303254e",
+      "sourceName": "contracts/libs/vendor/ILiquidityProvider.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../erc20/IERC20TokenV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "ILiquidityProvider"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IMultiBridge.sol": {
+      "lastModificationDate": 1658132794880,
+      "contentHash": "bb087e45b7853111ed05658f3f7c16ad",
+      "sourceName": "contracts/interfaces/IMultiBridge.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IMultiBridge"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IMStable.sol": {
+      "lastModificationDate": 1658132794868,
+      "contentHash": "9de8cf1c52d4517f8fb049ff482194aa",
+      "sourceName": "contracts/interfaces/IMStable.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IMStable"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IMooniswap.sol": {
+      "lastModificationDate": 1658132794876,
+      "contentHash": "52e87f348e309b6d58f1e28a3a463d8b",
+      "sourceName": "contracts/interfaces/IMooniswap.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IMooniswap",
+        "IMooniswapRegistry"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IShell.sol": {
+      "lastModificationDate": 1658132794860,
+      "contentHash": "e307f2f93c152c26331f70699f6b8bdf",
+      "sourceName": "contracts/interfaces/IShell.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IShell"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/interfaces/IUniswapV2Router01.sol": {
+      "lastModificationDate": 1658132794884,
+      "contentHash": "4a351a0f44965146f02ebc4843e264ce",
+      "sourceName": "contracts/interfaces/IUniswapV2Router01.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "IUniswapV2Router01"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/ReentrancyGuardV06.sol": {
+      "lastModificationDate": 1658134572262,
+      "contentHash": "c4837c5187f691f6ecaca0847ed9878b",
+      "sourceName": "contracts/libs/utils/ReentrancyGuardV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./errors/LibReentrancyGuardRichErrorsV06.sol",
+        "./errors/LibRichErrorsV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "ReentrancyGuardV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/errors/LibReentrancyGuardRichErrorsV06.sol": {
+      "lastModificationDate": 1658134572242,
+      "contentHash": "68c659e7f451ec476b7b3de796f33b22",
+      "sourceName": "contracts/libs/utils/errors/LibReentrancyGuardRichErrorsV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibReentrancyGuardRichErrorsV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/OwnableV06.sol": {
+      "lastModificationDate": 1658134572258,
+      "contentHash": "3e07aca264c1f6a5d198b3f7439b0cd5",
+      "sourceName": "contracts/libs/utils/OwnableV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IOwnableV06.sol",
+        "./errors/LibRichErrorsV06.sol",
+        "./errors/LibOwnableRichErrorsV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "OwnableV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/interfaces/IOwnableV06.sol": {
+      "lastModificationDate": 1658134572250,
+      "contentHash": "e2fc968fa20b0c84564e7fe816256dab",
+      "sourceName": "contracts/libs/utils/interfaces/IOwnableV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "IOwnableV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/errors/LibOwnableRichErrorsV06.sol": {
+      "lastModificationDate": 1658134572238,
+      "contentHash": "2061114b0fee5b798b46da91b8457636",
+      "sourceName": "contracts/libs/utils/errors/LibOwnableRichErrorsV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibOwnableRichErrorsV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/interfaces/IAuthorizableV06.sol": {
+      "lastModificationDate": 1658134572250,
+      "contentHash": "83c79286e39cbc05dba8731a01d00f9f",
+      "sourceName": "contracts/libs/utils/interfaces/IAuthorizableV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IOwnableV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "IAuthorizableV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/AuthorizableV06.sol": {
+      "lastModificationDate": 1658134572250,
+      "contentHash": "3931c0df6dac3cd0c91cae2388f0af53",
+      "sourceName": "contracts/libs/utils/AuthorizableV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IAuthorizableV06.sol",
+        "./errors/LibRichErrorsV06.sol",
+        "./errors/LibAuthorizableRichErrorsV06.sol",
+        "./OwnableV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "AuthorizableV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/utils/errors/LibAuthorizableRichErrorsV06.sol": {
+      "lastModificationDate": 1658134572242,
+      "contentHash": "40e2c90d4082daaaadaf218e039895c5",
+      "sourceName": "contracts/libs/utils/errors/LibAuthorizableRichErrorsV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "LibAuthorizableRichErrorsV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/libs/erc20/IEtherTokenV06.sol": {
+      "lastModificationDate": 1658134539812,
+      "contentHash": "4f54a438ba4b90492b202c4f965d68c9",
+      "sourceName": "contracts/libs/erc20/IEtherTokenV06.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20TokenV06.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.5"
+      ],
+      "artifacts": [
+        "IEtherTokenV06"
+      ]
+    },
+    "/home/sergey/Projects/plasma-hyper-dex-node/contracts/BalanceChecker.sol": {
+      "lastModificationDate": 1658132794892,
+      "contentHash": "c06dee29951eb0502d1fa31c347873ef",
+      "sourceName": "contracts/BalanceChecker.sol",
+      "solcConfig": {
+        "version": "0.6.5",
+        "settings": {
+          "evmVersion": "istanbul",
+          "optimizer": {
+            "enabled": true,
+            "runs": 200,
+            "details": {
+              "yul": true,
+              "deduplicate": true
+            }
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "devdoc",
+                "evm.bytecode.object",
+                "evm.bytecode.sourceMap",
+                "evm.deployedBytecode.object",
+                "evm.deployedBytecode.sourceMap",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.6"
+      ],
+      "artifacts": [
+        "BalanceChecker",
+        "IToken"
+      ]
+    }
+  }
+}

@@ -1,7 +1,14 @@
+import Big from 'big.js';
 import { isAddress } from 'ethers/lib/utils';
 import { existsSync } from 'fs';
 import path from 'path';
 import { LogLevel } from './types';
+
+/**
+ * Big js configuration
+ */
+Big.NE = -18;
+Big.PE = 78;
 
 require('dotenv').config(dotenvConfig());
 
@@ -15,9 +22,8 @@ export const CONFIG = {
   // Chain settings
   RPC_URL: required(process.env.RPC_URL, 'The environment variable RPC_URL is not set.'),
   // Quoter settings
-  QUOTE_ORDER_EXPIRATION_BUFFER_MS: validateInteger(process.env.QUOTE_ORDER_EXPIRATION_BUFFER_MS,60000, 'QUOTE_ORDER_EXPIRATION_BUFFER should be valid number'),
+  QUOTE_ORDER_EXPIRATION_BUFFER_MS: validateInteger(process.env.QUOTE_ORDER_EXPIRATION_BUFFER_MS, 60000, 'QUOTE_ORDER_EXPIRATION_BUFFER should be valid number'),
   // Contracts addresses
-  WRAPPED_NATIVE: validateAddress(process.env.WRAPPED_NATIVE, true, 'The environment variable WRAPPED_NATIVE is not set. You should provide valid contract address'),
   EXCHANGE_PROXY: validateAddress(process.env.EXCHANGE_PROXY, true, 'The environment variable EXCHANGE_PROXY is not set. You should provide valid contract address'),
   EXCHANGE_PROXY_TRANSFORMER_DEPLOYER: validateAddress(process.env.EXCHANGE_PROXY_TRANSFORMER_DEPLOYER, true, 'The environment variable EXCHANGE_PROXY_TRANSFORMER_DEPLOYER is not set. You should provide valid contract address'),
   EXCHANGE_PROXY_FLASH_WALLET: validateAddress(process.env.EXCHANGE_PROXY_FLASH_WALLET, true, 'The environment variable EXCHANGE_PROXY_FLASH_WALLET is not set. You should provide valid contract address'),
@@ -27,6 +33,7 @@ export const CONFIG = {
   AFFILIATE_FEE_TRANSFORMER: validateAddress(process.env.AFFILIATE_FEE_TRANSFORMER, true, 'The environment variable AFFILIATE_FEE_TRANSFORMER is not set. You should provide valid contract address'),
   FILL_QUOTE_TRANSFORMER: validateAddress(process.env.FILL_QUOTE_TRANSFORMER, true, 'The environment variable FILL_QUOTE_TRANSFORMER is not set. You should provide valid contract address'),
   POSITIVE_SLIPPAGE_FEE_TRANSFORMER: validateAddress(process.env.POSITIVE_SLIPPAGE_FEE_TRANSFORMER, true, 'The environment variable POSITIVE_SLIPPAGE_FEE_TRANSFORMER is not set. You should provide valid contract address'),
+  ERC20_BRIDGE_SAMPLER: validateAddress(process.env.ERC20_BRIDGE_SAMPLER, false, 'Invalid sampler contract address ERC20_BRIDGE_SAMPLER'),
 }
 
 function dotenvConfig(): { path: string } | undefined {
@@ -68,9 +75,9 @@ function validateAddress(value?: string, isRequired: boolean = false, errorMessa
     return undefined;
   }
   if (!isAddress(value)) {
-    throw new Error('Invalid wallet address');
+    throw new Error(errorMessage || 'Invalid address');
   }
-  return value;
+  return value.toLowerCase();
 }
 
 function validateInteger(value: string = '', defaultValue: number, errorMessage?: string): number {

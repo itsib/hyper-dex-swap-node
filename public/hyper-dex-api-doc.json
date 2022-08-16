@@ -310,10 +310,10 @@
 								"examples": {
 									"Example 1": {
 										"value": {
-											"sellToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
-											"buyToken": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+											"sellToken": "0xad6d458402f60fd3bd25163575031acdce07538d",
+											"buyToken": "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
 											"sellAmount": "9995002498750625",
-											"takerAddress": "0xf18A3af576c7871fEA9f8F3E54e8d0E71C98F206",
+											"takerAddress": "0xf18a3af576c7871fea9f8f3e54e8d0e71c98f206",
 											"slippagePercentage": "0.005",
 											"excludedSources": "Uniswap,Uniswap_V3"
 										}
@@ -354,10 +354,10 @@
 								"examples": {
 									"Example 1": {
 										"value": {
-											"sellToken": "0xaD6D458402F60fD3Bd25163575031ACDce07538D",
-											"buyToken": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+											"sellToken": "0xad6d458402f60fd3bd25163575031acdce07538d",
+											"buyToken": "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
 											"sellAmount": "9995002498750625",
-											"takerAddress": "0xf18A3af576c7871fEA9f8F3E54e8d0E71C98F206",
+											"takerAddress": "0xf18a3af576c7871fea9f8f3e54e8d0e71c98f206",
 											"slippagePercentage": "0.005",
 											"excludedSources": "Uniswap,Uniswap_V3"
 										}

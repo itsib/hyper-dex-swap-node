@@ -1,47 +1,81 @@
-import { BigNumber, CalldataInfo, MarketOperation, SwapQuote, SwapQuoteConsumer, SwapQuoter } from '@0x/asset-swapper';
 import { BadRequest } from '@tsed/exceptions';
+import Big from 'big.js';
 import { Contract } from 'ethers';
 import { inject, injectable } from 'inversify';
-import wethAbi from '../abi/weth.json';
-import { DEFAULT_QUOTE_OPTS, NULL_ADDRESS } from '../constants';
-import { GetSwapQuoteRequest, SwapQuoteResponse, Provider, SwapQuoteQuery } from '../types';
+import wethAbi from '../abi/WETH.json';
+import { CONFIG } from '../config';
 import {
-  FakeOrderbook,
-  getSwapQuotePrice,
-  getSwapQuoteSources,
-  parseAddress,
-  parseAmount,
-  parseLiquiditySources,
-  Web3Provider,
-} from '../utils';
-import { OptionsService } from './options-service';
+  DEFAULT_SAMPLER_OPTS,
+  NATIVE_ADDRESS,
+  NULL_ADDRESS,
+  SELL_SOURCE_FILTERS,
+  WRAPPED_NATIVE_ADDRESS,
+} from '../constants';
+import {
+  BridgeSource,
+  ChainId,
+  MarketSide,
+  Provider,
+  SamplerOptimizerResultWithReport,
+  SamplerOptions,
+  SwapQuote,
+  SwapQuoteLiquiditySource,
+  SwapQuoteOrdersBreakdown,
+  SwapQuoteParsedParams,
+  SwapQuoteQuery,
+  SwapQuoteResponse,
+} from '../types';
+import { createSwapQuote, parseAddress, parseAmount, parseLiquiditySources } from '../utils';
+import { SamplerService } from './sampler-service';
+import { SwapConsumerService } from './swap-consumer-service';
 
-export interface ISwapService {
-  getQuote(req: SwapQuoteQuery): Promise<any>;
+function getDefaultExcludedSources(chainId: ChainId): BridgeSource[] {
+  const allBridgeSources = Object.values(BridgeSource);
+  switch (chainId) {
+    case ChainId.MAINNET:
+      return [BridgeSource.MultiBridge];
+    case ChainId.KOVAN:
+      return allBridgeSources.filter(source => source !== BridgeSource.UniswapV2);
+    case ChainId.ROPSTEN:
+      const supportedRopstenSources = new Set([
+        BridgeSource.SushiSwap,
+        BridgeSource.Uniswap,
+        BridgeSource.UniswapV2,
+        BridgeSource.UniswapV3,
+        BridgeSource.Curve,
+        BridgeSource.Mooniswap,
+      ]);
+      return allBridgeSources.filter((s) => !supportedRopstenSources.has(s));
+    case ChainId.BSC:
+    case ChainId.MATIC:
+    case ChainId.AVALANCHE:
+    case ChainId.FANTOM:
+      return [BridgeSource.MultiBridge];
+    default:
+      return [];
+  }
 }
 
 @injectable()
-export class SwapService implements ISwapService {
+export class SwapService {
 
-  private readonly _swapQuoter: Promise<SwapQuoter>;
+  private readonly _wethContract: Contract;
 
-  private readonly _swapQuoteConsumer: Promise<SwapQuoteConsumer>;
-
-  private readonly _wethContract: Promise<Contract>;
+  private readonly _defaultExcludedSources: BridgeSource[];
 
   constructor(
     @inject('Provider') private _provider: Provider,
-    @inject('OptionsService') private _optionsService: OptionsService,
+    @inject('ChainId') private _chainId: ChainId,
+    @inject('SamplerService') private _samplerService: SamplerService,
+    @inject('SwapConsumerService') private _swapConsumerService: SwapConsumerService,
   ) {
-    this._swapQuoter = this._optionsService.getSwapQuoterOptions().then(o => new SwapQuoter(new Web3Provider(this._provider), new FakeOrderbook(), o));
+    this._wethContract = new Contract(WRAPPED_NATIVE_ADDRESS[this._chainId], wethAbi, this._provider);
 
-    this._swapQuoteConsumer = this._optionsService.getSwapQuoterOptions().then(o => new SwapQuoteConsumer(o));
-
-    this._wethContract = this._optionsService.getWrappedAddress().then(address => new Contract(address, wethAbi, this._provider));
+    this._defaultExcludedSources = getDefaultExcludedSources(this._chainId);
   }
 
   async getQuote(params: SwapQuoteQuery): Promise<SwapQuoteResponse> {
-    const quoteRequest: GetSwapQuoteRequest = await this._parseQuoteParams(params);
+    const quoteRequest: SwapQuoteParsedParams = await this._parseQuoteParams(params);
 
     if (quoteRequest.isWrap) {
       return this._getWrapQuote(quoteRequest);
@@ -57,19 +91,13 @@ export class SwapService implements ISwapService {
    * @param quoteRequest
    * @private
    */
-  private async _getWrapQuote(quoteRequest: GetSwapQuoteRequest): Promise<SwapQuoteResponse> {
-    const { chainId } = await this._provider.getNetwork();
-    const nativeAddress = await this._optionsService.getNativeAddress();
-    const wethContract = await this._wethContract;
-    const data = wethContract.interface.encodeFunctionData('deposit', []);
-    const value = quoteRequest.amount;
-
+  private async _getWrapQuote(quoteRequest: SwapQuoteParsedParams): Promise<SwapQuoteResponse> {
     return {
-      chainId,
+      chainId: this._chainId,
       buyAmount: quoteRequest.amount.toString(),
       sellAmount: quoteRequest.amount.toString(),
-      buyTokenAddress: wethContract.address,
-      sellTokenAddress: nativeAddress,
+      buyTokenAddress: WRAPPED_NATIVE_ADDRESS[this._chainId],
+      sellTokenAddress: NATIVE_ADDRESS[this._chainId],
       allowanceTarget: NULL_ADDRESS,
 
       price: '1',
@@ -81,9 +109,9 @@ export class SwapService implements ISwapService {
       minimumProtocolFee: '0',
 
       from: quoteRequest.takerAddress,
-      to: wethContract.address,
-      value: value.toString(),
-      data,
+      to: WRAPPED_NATIVE_ADDRESS[this._chainId],
+      value: quoteRequest.amount.toString(),
+      data: this._wethContract.interface.encodeFunctionData('deposit', []),
     };
   }
 
@@ -92,19 +120,14 @@ export class SwapService implements ISwapService {
    * @param quoteRequest
    * @private
    */
-  private async _getUnwrapQuote(quoteRequest: GetSwapQuoteRequest): Promise<SwapQuoteResponse> {
-    const { chainId } = await this._provider.getNetwork();
-    const nativeAddress = await this._optionsService.getNativeAddress();
-    const wethContract = await this._wethContract;
-    const data = wethContract.interface.encodeFunctionData('withdraw', [quoteRequest.amount.toString()]);
-
+  private async _getUnwrapQuote(quoteRequest: SwapQuoteParsedParams): Promise<SwapQuoteResponse> {
     return {
-      chainId,
+      chainId: this._chainId,
       buyAmount: quoteRequest.amount.toString(),
       sellAmount: quoteRequest.amount.toString(),
-      buyTokenAddress: nativeAddress,
-      sellTokenAddress: wethContract.address,
-      allowanceTarget: wethContract.address,
+      buyTokenAddress: NATIVE_ADDRESS[this._chainId],
+      sellTokenAddress: WRAPPED_NATIVE_ADDRESS[this._chainId],
+      allowanceTarget: WRAPPED_NATIVE_ADDRESS[this._chainId],
 
       price: '1',
       guaranteedPrice: '1',
@@ -115,9 +138,9 @@ export class SwapService implements ISwapService {
       minimumProtocolFee: '0',
 
       from: quoteRequest.takerAddress,
-      to: wethContract.address,
+      to: WRAPPED_NATIVE_ADDRESS[this._chainId],
       value: '0',
-      data,
+      data: this._wethContract.interface.encodeFunctionData('withdraw', [quoteRequest.amount.toString()]),
     };
   }
 
@@ -126,64 +149,71 @@ export class SwapService implements ISwapService {
    * @param quoteRequest
    * @private
    */
-  private async _getSwapQuote(quoteRequest: GetSwapQuoteRequest): Promise<SwapQuoteResponse> {
-    const { chainId } = await this._provider.getNetwork();
-    const swapQuoter = await this._swapQuoter;
-    const swapQuoteConsumer = await this._swapQuoteConsumer;
-    const nativeAddress = await this._optionsService.getNativeAddress();
-    const contractAddresses = await this._optionsService.getContractAddresses();
-
-    const options = {
-      ...DEFAULT_QUOTE_OPTS,
+  private async _getSwapQuote(quoteRequest: SwapQuoteParsedParams): Promise<SwapQuoteResponse> {
+    const samplerOpts: Required<SamplerOptions> = {
+      ...DEFAULT_SAMPLER_OPTS,
       excludedSources: quoteRequest.excludedSources,
-      bridgeSlippage: quoteRequest.slippagePercentage,
-    };
+      slippagePercentage: quoteRequest.slippagePercentage,
+    }
 
-    const swapQuote: SwapQuote = await swapQuoter.getSwapQuoteAsync(
+    const optimizerResult: SamplerOptimizerResultWithReport = await this._samplerService.getOptimizerResult(
       quoteRequest.buyToken,
       quoteRequest.sellToken,
       quoteRequest.amount,
       quoteRequest.tradeType,
-      options,
+      samplerOpts,
     );
 
-    const callDataInfo: CalldataInfo = await swapQuoteConsumer.getCalldataOrThrowAsync(swapQuote, {
-      extensionContractOpts: {
-        isFromETH: quoteRequest.isNativeSell,
-        isToETH: quoteRequest.isNativeBuy,
-        isMetaTransaction: false,
-        shouldSellEntireBalance: false,
-      },
+    const swapQuote: SwapQuote = createSwapQuote(
+      optimizerResult,
+      quoteRequest.buyToken,
+      quoteRequest.sellToken,
+      quoteRequest.tradeType,
+      quoteRequest.amount,
+      '10',
+      DEFAULT_SAMPLER_OPTS.gasSchedule,
+      quoteRequest.slippagePercentage,
+    );
+
+    // Use the raw gas, not scaled by gas price
+    const exchangeProxyOverhead = Big(samplerOpts.exchangeOverhead(optimizerResult.sourceFlags)).toNumber();
+    swapQuote.bestCaseQuoteInfo.gas += exchangeProxyOverhead;
+    swapQuote.worstCaseQuoteInfo.gas += exchangeProxyOverhead;
+
+    const txCalldata = await this._swapConsumerService.getTxCalldata(swapQuote, {
+      isNativeSell: quoteRequest.isNativeSell,
+      isNativeBuy: quoteRequest.isNativeBuy
     });
 
-    const { price, guaranteedPrice } = getSwapQuotePrice(swapQuote);
-    const sellTokenToEthRate = swapQuote.takerAmountPerEth.times(new BigNumber(10).pow(18 - swapQuote.takerTokenDecimals)).decimalPlaces(swapQuote.takerTokenDecimals);
-    const buyTokenToEthRate = swapQuote.makerAmountPerEth.times(new BigNumber(10).pow(18 - swapQuote.makerTokenDecimals)).decimalPlaces(swapQuote.makerTokenDecimals);
+    const { price, guaranteedPrice } = this._getSwapQuotePrice(swapQuote);
 
-    const minimumProtocolFee = BigNumber.min(swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount, swapQuote.bestCaseQuoteInfo.protocolFeeInWeiAmount);
+    const sellTokenToEthRate = Big(swapQuote.sellAmountPerEth).times(Math.pow(10, 18 - swapQuote.sellTokenDecimals)).toFixed(swapQuote.sellTokenDecimals);
+    const buyTokenToEthRate = Big(swapQuote.buyAmountPerEth).times(Math.pow(10, 18 - swapQuote.buyTokenDecimals)).toFixed(swapQuote.buyTokenDecimals);
 
-    const value = quoteRequest.isNativeSell ? swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount.plus(swapQuote.worstCaseQuoteInfo.takerAmount) : swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount;
+    const minimumProtocolFee = swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount.lt(swapQuote.bestCaseQuoteInfo.protocolFeeInWeiAmount) ? swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount : swapQuote.bestCaseQuoteInfo.protocolFeeInWeiAmount;
+
+    const value = quoteRequest.isNativeSell ? swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount.add(swapQuote.worstCaseQuoteInfo.sellAmount) : swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount;
 
     return {
-      chainId,
-      buyAmount: swapQuote.bestCaseQuoteInfo.makerAmount.toString(),
-      sellAmount: swapQuote.bestCaseQuoteInfo.totalTakerAmount.toString(),
-      buyTokenAddress: quoteRequest.isNativeBuy ? nativeAddress : quoteRequest.buyToken,
-      sellTokenAddress: quoteRequest.isNativeSell ? nativeAddress : quoteRequest.sellToken,
-      allowanceTarget: quoteRequest.isNativeSell ? NULL_ADDRESS : contractAddresses.exchangeProxy,
+      chainId: this._chainId,
+      buyAmount: swapQuote.bestCaseQuoteInfo.buyAmount.toString(),
+      sellAmount: swapQuote.bestCaseQuoteInfo.sellAmount.toString(),
+      buyTokenAddress: quoteRequest.isNativeBuy ? NATIVE_ADDRESS[this._chainId] : quoteRequest.buyToken,
+      sellTokenAddress: quoteRequest.isNativeSell ? NATIVE_ADDRESS[this._chainId] : quoteRequest.sellToken,
+      allowanceTarget: quoteRequest.isNativeSell ? NULL_ADDRESS : CONFIG.EXCHANGE_PROXY,
 
       price: price.toString(),
       guaranteedPrice: guaranteedPrice.toString(),
-      sources: getSwapQuoteSources(swapQuote, chainId),
+      sources: this._getSwapQuoteSources(swapQuote),
       sellTokenToEthRate: sellTokenToEthRate.toString(),
       buyTokenToEthRate: buyTokenToEthRate.toString(),
       protocolFee: swapQuote.worstCaseQuoteInfo.protocolFeeInWeiAmount.toString(),
       minimumProtocolFee: minimumProtocolFee.toString(),
 
       from: quoteRequest.takerAddress,
-      to: callDataInfo.toAddress,
+      to: txCalldata.to,
       value: value.toString(),
-      data: callDataInfo.calldataHexString,
+      data: txCalldata.data,
     };
   }
 
@@ -192,21 +222,18 @@ export class SwapService implements ISwapService {
    * @param params
    * @private
    */
-  private async _parseQuoteParams(params: SwapQuoteQuery): Promise<GetSwapQuoteRequest> {
-    const wrappedAddress = await this._optionsService.getWrappedAddress();
-    const defaultExcludedSources = await this._optionsService.getDefaultExcludedSources();
-
+  private async _parseQuoteParams(params: SwapQuoteQuery): Promise<SwapQuoteParsedParams> {
     const isNativeSell = params.sellToken === 'NATIVE';
     const isNativeBuy = params.buyToken === 'NATIVE';
-    const sellToken = isNativeSell ? wrappedAddress : parseAddress(params.sellToken, 'sellToken');
-    const buyToken = isNativeBuy ? wrappedAddress : parseAddress(params.buyToken, 'buyToken');
-    const isWrap = isNativeSell && buyToken === wrappedAddress;
-    const isUnwrap = isNativeBuy && sellToken === wrappedAddress;
-    const tradeType = params.sellAmount ? MarketOperation.Sell : MarketOperation.Buy;
-    const amount = tradeType === MarketOperation.Sell ? parseAmount(params.sellAmount, 'sellAmount') : parseAmount(params.buyAmount, 'buyAmount');
+    const sellToken = isNativeSell ? WRAPPED_NATIVE_ADDRESS[this._chainId] : parseAddress(params.sellToken, 'sellToken');
+    const buyToken = isNativeBuy ? WRAPPED_NATIVE_ADDRESS[this._chainId] : parseAddress(params.buyToken, 'buyToken');
+    const isWrap = isNativeSell && buyToken === WRAPPED_NATIVE_ADDRESS[this._chainId];
+    const isUnwrap = isNativeBuy && sellToken === WRAPPED_NATIVE_ADDRESS[this._chainId];
+    const tradeType = params.sellAmount ? MarketSide.Sell : MarketSide.Buy;
+    const amount = tradeType === MarketSide.Sell ? parseAmount(params.sellAmount, 'sellAmount') : parseAmount(params.buyAmount, 'buyAmount');
     const takerAddress = parseAddress(params.takerAddress, 'takerAddress');
-    const slippagePercentage = params.slippagePercentage === undefined ? DEFAULT_QUOTE_OPTS.bridgeSlippage : Number.parseFloat(params.slippagePercentage);
-    const excludedSources = parseLiquiditySources(params.excludedSources, defaultExcludedSources, 'excludedSources');
+    const slippagePercentage = params.slippagePercentage === undefined ? DEFAULT_SAMPLER_OPTS.slippagePercentage : Number.parseFloat(params.slippagePercentage);
+    const excludedSources = parseLiquiditySources(params.excludedSources, this._defaultExcludedSources, 'excludedSources');
 
     // If token addresses are the same but unwrap or wrap operation is requested
     if (!isUnwrap && !isWrap && sellToken === buyToken) {
@@ -259,5 +286,74 @@ export class SwapService implements ISwapService {
       isNativeSell,
       isNativeBuy,
     }
+  }
+
+  /**
+   * Calculate swap quote execute prices
+   * @param quote
+   * @private
+   */
+  private _getSwapQuotePrice(quote: SwapQuote): { price: string; guaranteedPrice: string } {
+    const isSelling = quote.side === MarketSide.Sell;
+    const { buyAmount, totalSellAmount } = quote.bestCaseQuoteInfo;
+    const { buyAmount: guaranteedBuyAmount, totalSellAmount: guaranteedTotalSellAmount } = quote.worstCaseQuoteInfo;
+
+    const roundingStrategy = isSelling ? 0 : 3;
+    const buyAmountMultiplier = Math.pow(10, quote.buyTokenDecimals);
+    const sellAmountMultiplier = Math.pow(10, quote.sellTokenDecimals);
+
+    const unitBuyAmount = buyAmount.toBig().div(buyAmountMultiplier);
+    const unitSellAmount = totalSellAmount.toBig().div(sellAmountMultiplier);
+    const guaranteedUnitBuyAmount = guaranteedBuyAmount.toBig().div(buyAmountMultiplier);
+    const guaranteedUnitSellAmount = guaranteedTotalSellAmount.toBig().div(sellAmountMultiplier);
+
+    // Best price
+    const price = isSelling
+      ? unitBuyAmount
+        .div(unitSellAmount)
+        .times(buyAmountMultiplier)
+        .toFixed(0, roundingStrategy)
+      : unitSellAmount
+        .div(unitBuyAmount)
+        .times(sellAmountMultiplier)
+        .toFixed(0, roundingStrategy);
+
+    // Guaranteed price before revert occurs
+    const guaranteedPrice = isSelling
+      ? guaranteedUnitBuyAmount
+        .div(guaranteedUnitSellAmount)
+        .times(buyAmountMultiplier)
+        .toFixed(0, roundingStrategy)
+      : guaranteedUnitSellAmount
+        .div(guaranteedUnitBuyAmount)
+        .times(sellAmountMultiplier)
+        .toFixed(0, roundingStrategy);
+
+    return { price, guaranteedPrice };
+  }
+
+  private _getSwapQuoteSources(quote: SwapQuote): SwapQuoteLiquiditySource[] {
+    const sourceBreakdown: SwapQuoteOrdersBreakdown = quote.sourceBreakdown;
+    const defaultSourceBreakdown: SwapQuoteOrdersBreakdown[] = Object.assign(
+      {},
+      ...Object.values(SELL_SOURCE_FILTERS[this._chainId].getSources()).map((s) => ({ [s as any]: '0' })),
+    );
+
+    return Object.entries({ ...defaultSourceBreakdown, ...sourceBreakdown }).reduce<SwapQuoteLiquiditySource[]>((acc, [source, breakdown]) => {
+      let obj;
+      if (source === BridgeSource.MultiHop && typeof breakdown !== 'string') {
+        obj = {
+          ...(breakdown as any)!,
+          name: BridgeSource.MultiHop,
+          proportion: +Big((breakdown as any)!.proportion).toPrecision(4),
+        };
+      } else {
+        obj = {
+          name: source,
+          proportion: +Big(breakdown as string).toPrecision(4),
+        };
+      }
+      return [...acc, obj];
+    }, []);
   }
 }

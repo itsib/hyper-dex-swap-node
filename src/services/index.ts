@@ -1,2 +1,2 @@
 export * from './swap-service';
-export * from './options-service';
+export * from './sampler-service';

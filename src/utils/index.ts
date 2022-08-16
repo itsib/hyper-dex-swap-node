@@ -5,7 +5,6 @@ export * from './parse-rpc-call-error';
 export * from './parse-address';
 export * from './parse-amount';
 export * from './parse-liquidity-sources';
-export * from './web3-provider';
 export * from './get-provider';
 export * from './source-filter';
 export * from './sampler-contract-wrapper';
